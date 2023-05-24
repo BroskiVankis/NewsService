@@ -1,7 +1,9 @@
 package com.example.demo.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -24,5 +26,13 @@ public class I18NConfig {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+        resourceBundleMessageSource.setBasename("i18n/messages"); // "messages.properties" for default locale and "messages_{locale}.properties" for specific locales
+        resourceBundleMessageSource.setDefaultEncoding("UTF-8"); // encoding for supporting international characters
+        return resourceBundleMessageSource;
     }
 }
