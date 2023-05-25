@@ -25,6 +25,9 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
+    private List<NewsEntity> news;
+
     public String getEmail() {
         return email;
     }

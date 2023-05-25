@@ -3,6 +3,9 @@ package com.example.demo.model.entity;
 import com.example.demo.model.enums.UserRoleEnum;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "user_roles")
 public class UserRoleEntity {
@@ -14,6 +17,10 @@ public class UserRoleEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRoleEnum  userRole;
+
+
+    @ManyToMany(mappedBy = "userRoles")
+    private List<UserEntity> users = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -33,11 +40,21 @@ public class UserRoleEntity {
         return this;
     }
 
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+    public UserRoleEntity setUsers(List<UserEntity> users) {
+        this.users = users;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "UserRoleEntity{" +
                 "id=" + id +
                 ", userRole=" + userRole +
+                ", users=" + users +
                 '}';
     }
 }

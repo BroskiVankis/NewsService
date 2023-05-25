@@ -4,7 +4,6 @@ import com.example.demo.model.enums.StateEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,9 +13,9 @@ import java.util.UUID;
 public class NewsEntity {
 
     @Id
-    @org.hibernate.validator.constraints.UUID
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(columnDefinition = "VARCHAR(36)")
     private UUID id;
 
     @Enumerated(EnumType.STRING)
@@ -42,6 +41,7 @@ public class NewsEntity {
     private LocalDateTime validTo;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity publisher;
 
     public UUID getId() {
