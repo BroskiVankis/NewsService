@@ -1,6 +1,8 @@
 package com.example.demo.model.dto.news;
 
+import com.example.demo.model.enums.StateEnum;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -12,17 +14,19 @@ public class CreateOrUpdateNewsDTO {
     @NotEmpty
     private String text;
 
-    @NotEmpty
+    @NotNull(message = "Creation Date is required!")
     private LocalDateTime creationDate;
 
     @NotEmpty
     private String photoLink;
 
-    @NotEmpty
+    @NotNull(message = "Valid From is required!")
     private LocalDateTime validFrom;
 
-    @NotEmpty
+    @NotNull(message = "Valid To is required!")
     private LocalDateTime validTo;
+
+    private StateEnum state;
 
     public String getTitle() {
         return title;
@@ -75,6 +79,15 @@ public class CreateOrUpdateNewsDTO {
 
     public CreateOrUpdateNewsDTO setValidTo(LocalDateTime validTo) {
         this.validTo = validTo;
+        return this;
+    }
+
+    public StateEnum getState() {
+        return state;
+    }
+
+    public CreateOrUpdateNewsDTO setState(StateEnum state) {
+        this.state = state;
         return this;
     }
 }

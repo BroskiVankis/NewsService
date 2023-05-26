@@ -15,5 +15,6 @@ public interface NewsMapper {
 
     @Mapping(source = "publisher.firstName", target = "publisherFirstName")
     @Mapping(source = "publisher.lastName", target = "publisherLastName")
+    @Mapping(source = "title", target = "title")
     NewsDetailDTO newsEntityToNewsDetailDto(NewsEntity newsEntity);
 }

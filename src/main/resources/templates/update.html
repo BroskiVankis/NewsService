@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    <script src="/js/jquery-3.5.1.slim.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="/"><img alt="logo picture" src="/images/icon.png" class="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto col-12 justify-content-between">
+                <li class="nav-item">
+                    <a class="nav-link" href="/news/add">Add News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/news/all">All News</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/">Action</a>
+                        <a class="dropdown-item" href="/">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="form-inline my-2 my-lg-0 border px-3">
+                        <div class="logged-user"
+                             text="Welcome, Gosho"></div>
+                        <a class="nav-link" href="/users/logout">Logout</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/login">Login</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container">
+    <h2 class="text-center text-white">Update News</h2>
+    <form method="POST"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="title">Title</label>
+                <input id="title" type="url" class="form-control"
+                       placeholder="Put the news title here!">
+                <p class="errors alert alert-danger">
+                    News Title is required
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="state">State</label>
+                <select id="state" class="form-control">
+                    <option value="">- Select the state of the news -</option>
+                    <option>
+                        State type
+                    </option>
+                </select>
+                <p class="errors alert alert-danger">
+                    State type is required.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="validFrom" class="text-white font-weight-bold">Valid From</label>
+                <input id="validFrom" type="datetime-local" class="form-control" th:field="*{validFrom}"
+                       th:datetime="${#temporals.format(validFrom, 'yyyy-MM-dd\'T\'HH:mm')}"
+                       placeholder="Valid From"/>
+                <p class="errors alert alert-danger">
+                    Date of creation of the article is needed.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="validTo" class="text-white font-weight-bold">Valid To</label>
+                <input id="validTo" type="datetime-local" th:field="*{validTo}"
+                       th:datetime="${#temporals.format(validTo, 'yyyy-MM-dd\'T\'HH:mm')}"
+                       class="form-control"
+                       placeholder="Valid To"/>
+                <p class="errors alert alert-danger">
+                    Valid to date is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="text">Text</label>
+            <textarea id="text" type="textarea" class="form-control" rows="3"
+                      placeholder="Text"></textarea>
+            <p class="errors alert alert-danger">
+                Text for this article is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="imageUrl">Image URL</label>
+            <input id="imageUrl" type="url" class="form-control"
+                   placeholder="Put vehicle image URL here">
+            <p class="errors alert alert-danger">
+                Article image URL is required.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Update News"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>

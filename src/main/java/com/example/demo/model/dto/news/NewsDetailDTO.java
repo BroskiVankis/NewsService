@@ -1,5 +1,7 @@
 package com.example.demo.model.dto.news;
 
+import com.example.demo.model.enums.StateEnum;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -22,6 +24,8 @@ public class NewsDetailDTO {
     private String publisherFirstName;
 
     private String publisherLastName;
+
+    private StateEnum state;
 
     public String getPublisherFirstName() {
         return publisherFirstName;
@@ -108,6 +112,15 @@ public class NewsDetailDTO {
 
     public NewsDetailDTO setValidTo(LocalDateTime validTo) {
         this.validTo = validTo;
+        return this;
+    }
+
+    public StateEnum getState() {
+        return state;
+    }
+
+    public NewsDetailDTO setState(StateEnum state) {
+        this.state = state;
         return this;
     }
 }

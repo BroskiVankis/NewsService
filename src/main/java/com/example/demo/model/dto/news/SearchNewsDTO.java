@@ -14,7 +14,7 @@ public class SearchNewsDTO {
     }
 
     public boolean isEmpty() {
-        return title.isEmpty();
+        return (title == null || title.isEmpty());
     }
 
     @Override

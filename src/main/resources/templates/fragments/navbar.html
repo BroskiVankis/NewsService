@@ -25,14 +25,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto col-12 justify-content-between">
                 <li class="nav-item">
-                    <a class="nav-link" th:text="#{navbar_search}" href="/offers/search">Search</a>
+                    <a class="nav-link" th:text="#{navbar_search}" href="/news/search">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:text="#{navbar_all_news}" href="/offers/all">All News</a>
+                    <a class="nav-link" th:text="#{navbar_all_news}" href="/news/all">All News</a>
                 </li>
                 <th:block>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:text="#{navbar_add_news}" href="/offers/add">Add News</a>
+                        <a class="nav-link" th:text="#{navbar_add_news}" href="/news/add">Add News</a>
                     </li>
                     <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
