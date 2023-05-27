@@ -2,7 +2,7 @@ package com.example.demo.model.dto.news;
 
 import com.example.demo.model.enums.StateEnum;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class NewsDetailDTO {
@@ -13,13 +13,13 @@ public class NewsDetailDTO {
 
     private String text;
 
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     private String photoLink;
 
-    private LocalDateTime validFrom;
+    private LocalDate validFrom;
 
-    private LocalDateTime validTo;
+    private LocalDate validTo;
 
     private String publisherFirstName;
 
@@ -79,11 +79,11 @@ public class NewsDetailDTO {
         return this;
     }
 
-    public LocalDateTime getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public NewsDetailDTO setCreationDate(LocalDateTime creationDate) {
+    public NewsDetailDTO setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
         return this;
     }
@@ -97,20 +97,20 @@ public class NewsDetailDTO {
         return this;
     }
 
-    public LocalDateTime getValidFrom() {
+    public LocalDate getValidFrom() {
         return validFrom;
     }
 
-    public NewsDetailDTO setValidFrom(LocalDateTime validFrom) {
+    public NewsDetailDTO setValidFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
         return this;
     }
 
-    public LocalDateTime getValidTo() {
+    public LocalDate getValidTo() {
         return validTo;
     }
 
-    public NewsDetailDTO setValidTo(LocalDateTime validTo) {
+    public NewsDetailDTO setValidTo(LocalDate validTo) {
         this.validTo = validTo;
         return this;
     }

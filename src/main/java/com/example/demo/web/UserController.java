@@ -19,7 +19,7 @@ public class UserController {
     }
 
     // HTTP POST Requests to "/users/login-error" endpoint
-    @PostMapping("login-error")
+    @PostMapping("/login-error")
     // "@ModelAttribute" value will be retrieved from the model attribute named: -> username entered in the login form
     // "RedirectAttributes" allows to "addFlashAttributes" used to store data temporarily and make it available in the redirect requests
     public String onFailedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,

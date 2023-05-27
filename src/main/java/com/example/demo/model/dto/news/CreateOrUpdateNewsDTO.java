@@ -1,12 +1,19 @@
 package com.example.demo.model.dto.news;
 
 import com.example.demo.model.enums.StateEnum;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class CreateOrUpdateNewsDTO {
+
+    @NotNull
+    @Min(1)
+    private Long articleId;
 
     @NotEmpty
     private String title;
@@ -14,19 +21,31 @@ public class CreateOrUpdateNewsDTO {
     @NotEmpty
     private String text;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Creation Date is required!")
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     @NotEmpty
     private String photoLink;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Valid From is required!")
-    private LocalDateTime validFrom;
+    private LocalDate validFrom;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Valid To is required!")
-    private LocalDateTime validTo;
+    private LocalDate validTo;
 
     private StateEnum state;
+
+    public Long getArticleId() {
+        return articleId;
+    }
+
+    public CreateOrUpdateNewsDTO setArticleId(Long articleId) {
+        this.articleId = articleId;
+        return this;
+    }
 
     public String getTitle() {
         return title;
@@ -46,11 +65,11 @@ public class CreateOrUpdateNewsDTO {
         return this;
     }
 
-    public LocalDateTime getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public CreateOrUpdateNewsDTO setCreationDate(LocalDateTime creationDate) {
+    public CreateOrUpdateNewsDTO setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
         return this;
     }
@@ -64,20 +83,20 @@ public class CreateOrUpdateNewsDTO {
         return this;
     }
 
-    public LocalDateTime getValidFrom() {
+    public LocalDate getValidFrom() {
         return validFrom;
     }
 
-    public CreateOrUpdateNewsDTO setValidFrom(LocalDateTime validFrom) {
+    public CreateOrUpdateNewsDTO setValidFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
         return this;
     }
 
-    public LocalDateTime getValidTo() {
+    public LocalDate getValidTo() {
         return validTo;
     }
 
-    public CreateOrUpdateNewsDTO setValidTo(LocalDateTime validTo) {
+    public CreateOrUpdateNewsDTO setValidTo(LocalDate validTo) {
         this.validTo = validTo;
         return this;
     }

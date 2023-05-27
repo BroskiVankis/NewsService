@@ -3,8 +3,8 @@ package com.example.demo.model.entity;
 import com.example.demo.model.enums.StateEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -29,16 +29,16 @@ public class NewsEntity {
     private String text;
 
     @Column(nullable = false)
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
 
     @Column
     private String photoLink;
 
     @Column(nullable = false)
-    private LocalDateTime validFrom;
+    private LocalDate validFrom;
 
     @Column(nullable = false)
-    private LocalDateTime validTo;
+    private LocalDate validTo;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -80,11 +80,11 @@ public class NewsEntity {
         return this;
     }
 
-    public LocalDateTime getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public NewsEntity setCreationDate(LocalDateTime creationDate) {
+    public NewsEntity setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
         return this;
     }
@@ -98,20 +98,20 @@ public class NewsEntity {
         return this;
     }
 
-    public LocalDateTime getValidFrom() {
+    public LocalDate getValidFrom() {
         return validFrom;
     }
 
-    public NewsEntity setValidFrom(LocalDateTime validFrom) {
+    public NewsEntity setValidFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
         return this;
     }
 
-    public LocalDateTime getValidTo() {
+    public LocalDate getValidTo() {
         return validTo;
     }
 
-    public NewsEntity setValidTo(LocalDateTime validTo) {
+    public NewsEntity setValidTo(LocalDate validTo) {
         this.validTo = validTo;
         return this;
     }

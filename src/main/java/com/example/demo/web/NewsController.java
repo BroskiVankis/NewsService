@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Controller
@@ -66,6 +68,10 @@ public class NewsController {
 
             return "redirect:/news/add";
         }
+
+        addNewsModel.setCreationDate(addNewsModel.getCreationDate());
+        addNewsModel.setValidFrom(addNewsModel.getValidFrom());
+        addNewsModel.setValidTo(addNewsModel.getValidTo());
 
         // if no errors, adding the news and redirecting to "/news/all"
         newsService.addNews(addNewsModel, userDetails);
