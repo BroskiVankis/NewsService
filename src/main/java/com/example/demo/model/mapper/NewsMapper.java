@@ -13,8 +13,8 @@ public interface NewsMapper {
 
     CreateOrUpdateNewsDTO newsEntityToCreateOrUpdateNewsDtoTo(NewsEntity newsEntity);
 
+//    @Mapping(source = "title", target = "title")
     @Mapping(source = "publisher.firstName", target = "publisherFirstName")
     @Mapping(source = "publisher.lastName", target = "publisherLastName")
-    @Mapping(source = "title", target = "title")
     NewsDetailDTO newsEntityToNewsDetailDto(NewsEntity newsEntity);
 }

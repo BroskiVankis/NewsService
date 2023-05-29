@@ -22,6 +22,8 @@ public class UserEntity extends BaseEntity{
 
     private boolean isActive;
 
+    private String imageUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
@@ -82,6 +84,24 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public UserEntity setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public List<NewsEntity> getNews() {
+        return news;
+    }
+
+    public UserEntity setNews(List<NewsEntity> news) {
+        this.news = news;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -90,7 +110,9 @@ public class UserEntity extends BaseEntity{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", isActive=" + isActive +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", userRoles=" + userRoles +
+                ", news=" + news +
                 '}';
     }
 }

@@ -69,9 +69,9 @@ public class NewsController {
             return "redirect:/news/add";
         }
 
-        addNewsModel.setCreationDate(addNewsModel.getCreationDate());
-        addNewsModel.setValidFrom(addNewsModel.getValidFrom());
-        addNewsModel.setValidTo(addNewsModel.getValidTo());
+//        addNewsModel.setCreationDate(addNewsModel.getCreationDate());
+//        addNewsModel.setValidFrom(addNewsModel.getValidFrom());
+//        addNewsModel.setValidTo(addNewsModel.getValidTo());
 
         // if no errors, adding the news and redirecting to "/news/all"
         newsService.addNews(addNewsModel, userDetails);
@@ -113,16 +113,16 @@ public class NewsController {
         //userService being used to get news details based ot the provided UUID
         //If news found, adding it to the model and returning "details" view
         // If News is not found throwing an exception
-        var news = newsService.getNewsEditDetails(uuid).
+        var article = newsService.getNewsEditDetails(uuid).
                 orElseThrow(() -> new ObjectNotFoundException("News with ID: " + uuid + " was not found!"));
 
-        model.addAttribute("news", news);
+        model.addAttribute("article", article);
 
         return "details";
     }
 
     //Deleting the News by provided UUID, where {id} is the Path
-    @PreAuthorize("isOwner(#uuid)") // specifying an authorization condition -> "isOwner(#uuid)" determines if authorized user is owner of the news item
+    @PreAuthorize("isPublisher(#uuid)") // specifying an authorization condition -> "isPublisher(#uuid)" determines if authorized user is owner of the news item
     @DeleteMapping("/news/{id}")
     public String deleteNews(@PathVariable("id") UUID uuid) {
         newsService.deleteNewsById(uuid);
@@ -131,15 +131,14 @@ public class NewsController {
     }
 
     // Getting the news based of UUID and rendering the "details" view
-    @GetMapping("/news/{id}")
-    public String getNewsDetails(@PathVariable("id") UUID uuid, Model model) {
+    @GetMapping("/news/{id}/details")
+    public String getNewsDetail(@PathVariable("id") UUID uuid, Model model) {
 
         var newsDto = newsService.findNewsByUUID(uuid).
                 orElseThrow(() -> new ObjectNotFoundException("News with ID " + uuid + " was not found!"));
 
-        model.addAttribute("news", newsDto);
+        model.addAttribute("article", newsDto);
 
         return "details";
     }
-
 }

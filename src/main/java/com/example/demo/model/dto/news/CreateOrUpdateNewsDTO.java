@@ -8,12 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class CreateOrUpdateNewsDTO {
-
-    @NotNull
-    @Min(1)
-    private Long articleId;
 
     @NotEmpty
     private String title;
@@ -38,14 +35,6 @@ public class CreateOrUpdateNewsDTO {
 
     private StateEnum state;
 
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public CreateOrUpdateNewsDTO setArticleId(Long articleId) {
-        this.articleId = articleId;
-        return this;
-    }
 
     public String getTitle() {
         return title;

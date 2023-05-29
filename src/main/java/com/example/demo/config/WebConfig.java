@@ -25,6 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     //Interceptors will be applied to all incoming requests and responses
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor);
         registry.addInterceptor(maintenanceInterceptor);

@@ -25,10 +25,10 @@ public class PublisherSecurityExpressionRoot extends SecurityExpressionRoot impl
         this.newsService = newsService;
     }
 
-    /*Checking if the auth user is the owner of the news item defined by UUID
+    /*Checking if the auth user is the publisher of the news item defined by UUID
     * Using the Authentication object to see the users principal(username) and deligate
     * to the NewsService to see if user is the publisher of the news item */
-    public boolean isOwner(UUID id) {
+    public boolean isPublisher(UUID id) {
         if(authentication.getPrincipal() == null) {
             return false;
         }

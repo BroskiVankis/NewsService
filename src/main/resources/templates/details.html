@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -24,12 +25,13 @@
                 <h5 class="card-title">
                     News Title</h5>
             </div>
-            <ul class="news-details list-group list-group-flush">
+            <ul class="article-details list-group list-group-flush">
                 <li class="list-group-item">
-                    <div class="card-text">• Title <span th:text="*{title}"></span></div>
-                    <div class="card-text">• Text <span th:text="*{text}"></span></div>
-                    <div class="card-text">• State type <span th:text="*{state}"></span></div>
-                    <div class="card-text">• Publisher <span th:text="*{publisherFullName}"></span></div>
+                    <div class="card-text">• Date of Creation: <span th:text="*{creationDate}"></span></div>
+                    <div class="card-text">• Title: <span th:text="*{title}"></span></div>
+                    <div class="card-text">• Text: <span th:text="*{text}"></span></div>
+                    <div class="card-text">• State type: <span th:text="*{state}"></span></div>
+                    <div class="card-text">• Publisher: <span th:text="*{publisherFullName}"></span></div>
                 </li>
             </ul>
             <div class="card-body">

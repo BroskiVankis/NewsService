@@ -48,7 +48,7 @@ public class UserRegistrationController {
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userModel", userModel); // Data being preserved and accessed in redirected request
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel", bindingResult);
-            return "redirect:/users/register";
+            return "redirect:/register";
         }
 
         // if no errors registering and logging the user and resolving the locale based on the request

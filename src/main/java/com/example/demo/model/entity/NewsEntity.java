@@ -4,6 +4,7 @@ import com.example.demo.model.enums.StateEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,10 +13,13 @@ import java.util.UUID;
 @Table(name = "news")
 public class NewsEntity {
 
+    //I was having some issues with adding a new article (500 Error "incorrect String value"),
+    // Turns out it was because @Column() was set to @Column(CHAR(36))
+    //Changing it to "VARBINARY(36) fixed the issue :)"
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(columnDefinition = "VARCHAR(36)")
+    @Column(columnDefinition = "VARBINARY(36)")
     private UUID id;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +35,7 @@ public class NewsEntity {
     @Column(nullable = false)
     private LocalDate creationDate;
 
-    @Column
+
     private String photoLink;
 
     @Column(nullable = false)

@@ -92,7 +92,7 @@ public class NewsService {
 
     public List<NewsDetailDTO> searchNews(SearchNewsDTO searchNewsDTO) {
         return this.newsRepository.findAll(new NewsSpecification(searchNewsDTO)).
-                stream().map(news -> newsMapper.newsEntityToNewsDetailDto(news)).toList();
+                stream().map(article -> newsMapper.newsEntityToNewsDetailDto(article)).toList();
     }
 
 }

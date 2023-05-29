@@ -123,4 +123,8 @@ public class NewsDetailDTO {
         this.state = state;
         return this;
     }
+
+    public String getNewsHighlight() {
+        return this.title + " " + this.creationDate;
+    }
 }
