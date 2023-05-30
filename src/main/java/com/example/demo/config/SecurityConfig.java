@@ -48,6 +48,7 @@ public class SecurityConfig {
                 requestMatchers("/news/add").authenticated().
                 requestMatchers("/news/**").permitAll().
                 requestMatchers("/maintenance").permitAll().
+                requestMatchers("/news/{id}/edit").hasRole("ADMIN").
                 // all other pages are available for logged users
                 anyRequest().authenticated().and().
                 // config of form login

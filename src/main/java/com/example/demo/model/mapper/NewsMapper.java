@@ -3,6 +3,7 @@ package com.example.demo.model.mapper;
 import com.example.demo.model.dto.news.CreateOrUpdateNewsDTO;
 import com.example.demo.model.dto.news.NewsDetailDTO;
 import com.example.demo.model.entity.NewsEntity;
+import com.example.demo.service.NewsService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -10,6 +11,8 @@ import org.mapstruct.Mapping;
 public interface NewsMapper {
 
     NewsEntity createOrUpdateNewsDtoToNewsEntity(CreateOrUpdateNewsDTO addNewsDTO);
+
+    NewsEntity createOrUpdateNewsDtoToNewsEntityUpdate(CreateOrUpdateNewsDTO updateNewsDTO);
 
     CreateOrUpdateNewsDTO newsEntityToCreateOrUpdateNewsDtoTo(NewsEntity newsEntity);
 

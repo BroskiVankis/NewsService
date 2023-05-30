@@ -1,6 +1,7 @@
 package com.example.demo.model.dto.news;
 
 import com.example.demo.model.enums.StateEnum;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -35,6 +36,31 @@ public class CreateOrUpdateNewsDTO {
 
     private StateEnum state;
 
+    private String publisherFirstName;
+
+    private String publisherLastName;
+
+    public String getPublisherFirstName() {
+        return publisherFirstName;
+    }
+
+    public CreateOrUpdateNewsDTO setPublisherFirstName(String publisherFirstName) {
+        this.publisherFirstName = publisherFirstName;
+        return this;
+    }
+
+    public String getPublisherLastName() {
+        return publisherLastName;
+    }
+
+    public CreateOrUpdateNewsDTO setPublisherLastName(String publisherLastName) {
+        this.publisherLastName = publisherLastName;
+        return this;
+    }
+
+    public String getPublisherFullName() {
+        return publisherFirstName + " " + publisherLastName;
+    }
 
     public String getTitle() {
         return title;

@@ -2,6 +2,7 @@ package com.example.demo.web;
 
 import com.example.demo.model.dto.news.CreateOrUpdateNewsDTO;
 import com.example.demo.model.dto.news.SearchNewsDTO;
+import com.example.demo.model.entity.NewsEntity;
 import com.example.demo.model.user.TechUserDetails;
 import com.example.demo.service.NewsService;
 import jakarta.validation.Valid;
@@ -14,10 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -69,10 +67,6 @@ public class NewsController {
             return "redirect:/news/add";
         }
 
-//        addNewsModel.setCreationDate(addNewsModel.getCreationDate());
-//        addNewsModel.setValidFrom(addNewsModel.getValidFrom());
-//        addNewsModel.setValidTo(addNewsModel.getValidTo());
-
         // if no errors, adding the news and redirecting to "/news/all"
         newsService.addNews(addNewsModel, userDetails);
 
@@ -118,7 +112,7 @@ public class NewsController {
 
         model.addAttribute("article", article);
 
-        return "details";
+        return "update";
     }
 
     //Deleting the News by provided UUID, where {id} is the Path
@@ -140,5 +134,27 @@ public class NewsController {
         model.addAttribute("article", newsDto);
 
         return "details";
+    }
+
+    @PreAuthorize("isPublisher(#uuid)")
+    @PutMapping("/news/{id}/edit")
+    public String updateNews(@PathVariable("id") UUID id,
+                             @Valid CreateOrUpdateNewsDTO updateNewsModel,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             @AuthenticationPrincipal TechUserDetails userDetails) {
+
+        //Validating the form data submitted for updating the article
+        if(bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("updateNewsModel", updateNewsModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateNewsModel",bindingResult);
+
+            //Redirecting to the Edit view with validation errors
+            return "redirect:/news/{id}/edit";
+        }
+
+        newsService.updateNews(updateNewsModel, userDetails);
+        // Redirecting to the details page of the updated article
+        return "redirect:/news/{id}/details";
     }
 }

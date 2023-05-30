@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -13,53 +14,7 @@
 
 <body>
 
-<div>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
-        <a class="navbar-brand" href="/"><img alt="logo picture" src="/images/icon.png" class="logo"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto col-12 justify-content-between">
-                <li class="nav-item">
-                    <a class="nav-link" href="/news/add">Add News</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/news/all">All News</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Admin
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/">Action</a>
-                        <a class="dropdown-item" href="/">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="form-inline my-2 my-lg-0 border px-3">
-                        <div class="logged-user"
-                             text="Welcome, Gosho"></div>
-                        <a class="nav-link" href="/users/logout">Logout</a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/login">Login</a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
-</div>
+<div th:replace="fragments/navbar">Navbar</div>
 
 
 <div class="container">
@@ -76,41 +31,41 @@
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="state">State</label>
-                <select id="state" class="form-control">
-                    <option value="">- Select the state of the news -</option>
-                    <option>
-                        State type
-                    </option>
-                </select>
-                <p class="errors alert alert-danger">
-                    State type is required.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="validFrom" class="text-white font-weight-bold">Valid From</label>
-                <input id="validFrom" type="date" class="form-control" th:field="*{validFrom}"
-                       th:datetime="${#temporals.format(validFrom, 'yyyy-MM-dd')}"
-                       placeholder="Valid From"/>
-                <p class="errors alert alert-danger">
-                    Date of creation of the article is needed.
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="validTo" class="text-white font-weight-bold">Valid To</label>
-                <input id="validTo" type="date" th:field="*{validTo}"
-                       th:datetime="${#temporals.format(validTo, 'yyyy-MM-dd')}"
-                       class="form-control"
-                       placeholder="Valid To"/>
-                <p class="errors alert alert-danger">
-                    Valid to date is required.
-                </p>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="form-group col-md-6 mb-3">-->
+<!--                <label class="text-center text-white font-weight-bold" for="state">State</label>-->
+<!--                <select id="state" class="form-control">-->
+<!--                    <option value="">- Select the state of the news -</option>-->
+<!--                    <option>-->
+<!--                        State type-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--                <p class="errors alert alert-danger">-->
+<!--                    State type is required.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="form-group col-md-6 mb-3">-->
+<!--                <label for="validFrom" class="text-white font-weight-bold">Valid From</label>-->
+<!--                <input id="validFrom" type="date" class="form-control" th:field="*{validFrom}"-->
+<!--                       th:datetime="${#temporals.format(validFrom, 'yyyy-MM-dd')}"-->
+<!--                       placeholder="Valid From"/>-->
+<!--                <p class="errors alert alert-danger">-->
+<!--                    Date of creation of the article is needed.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--            <div class="form-group col-md-6 mb-3">-->
+<!--                <label for="validTo" class="text-white font-weight-bold">Valid To</label>-->
+<!--                <input id="validTo" type="date" th:field="*{validTo}"-->
+<!--                       th:datetime="${#temporals.format(validTo, 'yyyy-MM-dd')}"-->
+<!--                       class="form-control"-->
+<!--                       placeholder="Valid To"/>-->
+<!--                <p class="errors alert alert-danger">-->
+<!--                    Valid to date is required.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="form-group">
             <label class="text-white font-weight-bold" for="text">Text</label>

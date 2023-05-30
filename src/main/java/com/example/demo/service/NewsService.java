@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.ObjectNotFoundException;
 import com.example.demo.model.dto.news.CreateOrUpdateNewsDTO;
 import com.example.demo.model.dto.news.NewsDetailDTO;
 import com.example.demo.model.dto.news.SearchNewsDTO;
@@ -93,6 +94,19 @@ public class NewsService {
     public List<NewsDetailDTO> searchNews(SearchNewsDTO searchNewsDTO) {
         return this.newsRepository.findAll(new NewsSpecification(searchNewsDTO)).
                 stream().map(article -> newsMapper.newsEntityToNewsDetailDto(article)).toList();
+    }
+
+    public void updateNews(CreateOrUpdateNewsDTO updateNewsModel, UserDetails userDetails) {
+//        NewsEntity existingNews = newsRepository.findById(newsId)
+//                .orElseThrow(() -> new ObjectNotFoundException("News with ID: " + newsId + " was not found!"));
+
+        NewsEntity existingNews = newsMapper.createOrUpdateNewsDtoToNewsEntityUpdate(updateNewsModel);
+
+        UserEntity publisher = userRepository.findByEmail(userDetails.getUsername())
+                        .orElseThrow();
+
+        existingNews.setPublisher(publisher);
+        newsRepository.save(existingNews);
     }
 
 }
