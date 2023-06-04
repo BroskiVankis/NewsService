@@ -1,7 +1,7 @@
 package com.example.demo.model.dto.news;
 
 import com.example.demo.model.enums.StateEnum;
-import jakarta.persistence.Id;
+//import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CreateOrUpdateNewsDTO {
+
+
+
+    private UUID id;
 
     @NotEmpty
     private String title;
@@ -122,6 +126,15 @@ public class CreateOrUpdateNewsDTO {
 
     public CreateOrUpdateNewsDTO setState(StateEnum state) {
         this.state = state;
+        return this;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public CreateOrUpdateNewsDTO setId(UUID id) {
+        this.id = id;
         return this;
     }
 }

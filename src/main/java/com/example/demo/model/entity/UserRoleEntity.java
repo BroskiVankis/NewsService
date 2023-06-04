@@ -1,8 +1,9 @@
 package com.example.demo.model.entity;
 
 import com.example.demo.model.enums.UserRoleEnum;
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

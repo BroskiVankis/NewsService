@@ -3,7 +3,6 @@ package com.example.demo.config;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.OAuthSuccessHandler;
 import com.example.demo.service.TechUserDetailsService;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,13 +41,12 @@ public class SecurityConfig {
                         authorizeRequests().
                 // everyone can download static resources
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().
                 // everyone can login and register
                 requestMatchers("/", "/users/login", "/users/register").permitAll().
                 requestMatchers("/news/add").authenticated().
                 requestMatchers("/news/**").permitAll().
                 requestMatchers("/maintenance").permitAll().
-                requestMatchers("/news/{id}/edit").hasRole("ADMIN").
+//                requestMatchers("/news/{id}/edit").hasRole("ADMIN").
                 // all other pages are available for logged users
                 anyRequest().authenticated().and().
                 // config of form login

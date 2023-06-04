@@ -3,10 +3,12 @@ package com.example.demo.model.entity;
 import com.example.demo.model.enums.StateEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.UUID;
 
 @Entity
@@ -15,11 +17,14 @@ public class NewsEntity {
 
     //I was having some issues with adding a new article (500 Error "incorrect String value"),
     // Turns out it was because @Column() was set to @Column(CHAR(36))
-    //Changing it to "VARBINARY(36) fixed the issue :)"
+    //Changing it to "VARBINARY(36) was saving the value with some weird characters"
+    //@Type(type = "uuid-char") turned out to be deprecated, so i could't use it
+    //@JdbcTypeCode(SqlTypes.VARCHAR) fixed the issue and values are now stored as UUIDs
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(columnDefinition = "VARBINARY(36)")
+    //@Column(name = "id", columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID id;
 
     @Enumerated(EnumType.STRING)

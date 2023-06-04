@@ -1,4 +1,4 @@
-package com.example.demo.model.validation;
+package com.example.demo.model.dto.news.validation;
 
 import com.example.demo.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;

@@ -96,11 +96,11 @@ public class NewsService {
                 stream().map(article -> newsMapper.newsEntityToNewsDetailDto(article)).toList();
     }
 
-    public void updateNews(CreateOrUpdateNewsDTO updateNewsModel, UserDetails userDetails) {
-//        NewsEntity existingNews = newsRepository.findById(newsId)
+    public void updateNews(CreateOrUpdateNewsDTO updateNewsDTO, UserDetails userDetails) {
+//        NewsEntity existingNews = newsRepository.findById()
 //                .orElseThrow(() -> new ObjectNotFoundException("News with ID: " + newsId + " was not found!"));
 
-        NewsEntity existingNews = newsMapper.createOrUpdateNewsDtoToNewsEntityUpdate(updateNewsModel);
+        NewsEntity existingNews = newsMapper.createOrUpdateNewsDtoToNewsEntityUpdate(updateNewsDTO);
 
         UserEntity publisher = userRepository.findByEmail(userDetails.getUsername())
                         .orElseThrow();

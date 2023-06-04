@@ -4,12 +4,14 @@ import com.example.demo.model.dto.news.CreateOrUpdateNewsDTO;
 import com.example.demo.model.dto.news.SearchNewsDTO;
 import com.example.demo.model.entity.NewsEntity;
 import com.example.demo.model.user.TechUserDetails;
+import com.example.demo.repository.NewsRepository;
 import com.example.demo.service.NewsService;
 import jakarta.validation.Valid;
 import com.example.demo.exception.ObjectNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Controller
@@ -27,8 +27,11 @@ public class NewsController {
 
     private final NewsService newsService;
 
-    public NewsController(NewsService newsService) {
+    private final NewsRepository newsRepository;
+
+    public NewsController(NewsService newsService, NewsRepository newsRepository) {
         this.newsService = newsService;
+        this.newsRepository = newsRepository;
     }
 
     // Getting all the news and returning the news view
@@ -110,6 +113,10 @@ public class NewsController {
         var article = newsService.getNewsEditDetails(uuid).
                 orElseThrow(() -> new ObjectNotFoundException("News with ID: " + uuid + " was not found!"));
 
+        if(!model.containsAttribute("updateNewsModel")) {
+            model.addAttribute("updateNewsModel", new CreateOrUpdateNewsDTO());
+        }
+
         model.addAttribute("article", article);
 
         return "update";
@@ -136,25 +143,45 @@ public class NewsController {
         return "details";
     }
 
-    @PreAuthorize("isPublisher(#uuid)")
+    //@PreAuthorize("isPublisher(#uuid)")
+//    @PutMapping("/news/{id}/edit")
+//    public String updateNews(@PathVariable("id") UUID id,
+//                             @RequestBody CreateOrUpdateNewsDTO updateNewsModel,
+//                             BindingResult bindingResult,
+//                             RedirectAttributes redirectAttributes,
+//                             @AuthenticationPrincipal TechUserDetails userDetails) {
+//
+//
+//        //Validating the form data submitted for updating the article
+//        if(bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("updateNewsModel", updateNewsModel);
+//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateNewsModel",bindingResult);
+//
+//            //Redirecting to the Edit view with validation errors
+//            return "redirect:/news/{id}/edit";
+//        }
+//
+//        newsService.updateNews(updateNewsModel, userDetails);
+//        // Redirecting to the details page of the updated article
+//        return "redirect:/news/all";
+//
+//    }
+
     @PutMapping("/news/{id}/edit")
-    public String updateNews(@PathVariable("id") UUID id,
-                             @Valid CreateOrUpdateNewsDTO updateNewsModel,
-                             BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes,
-                             @AuthenticationPrincipal TechUserDetails userDetails) {
+    public NewsEntity updateNews(@RequestBody CreateOrUpdateNewsDTO newArticle, @PathVariable("id") UUID id) {
 
-        //Validating the form data submitted for updating the article
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("updateNewsModel", updateNewsModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateNewsModel",bindingResult);
+        NewsEntity article = newsRepository.findById(id)
+                .orElse(new NewsEntity());
 
-            //Redirecting to the Edit view with validation errors
-            return "redirect:/news/{id}/edit";
-        }
+        article.setTitle(newArticle.getTitle());
+        article.setCreationDate(newArticle.getCreationDate());
+        article.setValidFrom(newArticle.getValidFrom());
+        article.setValidTo(newArticle.getValidTo());
+        article.setText(newArticle.getText());
+        article.setPhotoLink(newArticle.getPhotoLink());
 
-        newsService.updateNews(updateNewsModel, userDetails);
-        // Redirecting to the details page of the updated article
-        return "redirect:/news/{id}/details";
+        return newsRepository.save(article);
+
     }
+
 }
