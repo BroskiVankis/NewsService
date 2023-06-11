@@ -1,7 +1,5 @@
 package com.example.demo.model.entity;
 
-//import jakarta.persistence.*;
-
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,7 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles = new ArrayList<>();
 
+    //Cascade All -> all operations performed on this side will be cascaded to the related entities on the inverse side
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
     private List<NewsEntity> news;
 

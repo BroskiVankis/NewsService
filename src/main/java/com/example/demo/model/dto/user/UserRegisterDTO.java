@@ -1,7 +1,7 @@
 package com.example.demo.model.dto.user;
 
-import com.example.demo.model.dto.news.validation.FieldMatch;
-import com.example.demo.model.dto.news.validation.UniqueUserEmail;
+import com.example.demo.model.validation.FieldMatch;
+import com.example.demo.model.validation.UniqueUserEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

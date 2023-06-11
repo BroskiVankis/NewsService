@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.exception.ObjectNotFoundException;
 import com.example.demo.model.dto.news.CreateOrUpdateNewsDTO;
 import com.example.demo.model.dto.news.NewsDetailDTO;
 import com.example.demo.model.dto.news.SearchNewsDTO;
@@ -81,6 +80,10 @@ public class NewsService {
         return newsRepository.findById(newsId).map(newsMapper::newsEntityToNewsDetailDto);
     }
 
+    public NewsEntity getNewsById(UUID id) {
+        return newsRepository.findById(id).get();
+    }
+
     //Adding new news by creating NewsEntity from CreateOrUpdateNewsDTO
     public void addNews(CreateOrUpdateNewsDTO addNewsDTO, UserDetails userDetails) {
         NewsEntity newNews = newsMapper.createOrUpdateNewsDtoToNewsEntity(addNewsDTO);
@@ -93,20 +96,11 @@ public class NewsService {
 
     public List<NewsDetailDTO> searchNews(SearchNewsDTO searchNewsDTO) {
         return this.newsRepository.findAll(new NewsSpecification(searchNewsDTO)).
-                stream().map(article -> newsMapper.newsEntityToNewsDetailDto(article)).toList();
+                stream().map(newsMapper::newsEntityToNewsDetailDto).toList();
     }
 
-    public void updateNews(CreateOrUpdateNewsDTO updateNewsDTO, UserDetails userDetails) {
-//        NewsEntity existingNews = newsRepository.findById()
-//                .orElseThrow(() -> new ObjectNotFoundException("News with ID: " + newsId + " was not found!"));
-
-        NewsEntity existingNews = newsMapper.createOrUpdateNewsDtoToNewsEntityUpdate(updateNewsDTO);
-
-        UserEntity publisher = userRepository.findByEmail(userDetails.getUsername())
-                        .orElseThrow();
-
-        existingNews.setPublisher(publisher);
-        newsRepository.save(existingNews);
+    public NewsEntity updateArticle(NewsEntity news) {
+        return newsRepository.save(news);
     }
 
 }

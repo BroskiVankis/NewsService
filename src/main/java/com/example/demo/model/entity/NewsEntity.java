@@ -17,13 +17,12 @@ public class NewsEntity {
 
     //I was having some issues with adding a new article (500 Error "incorrect String value"),
     // Turns out it was because @Column() was set to @Column(CHAR(36))
-    //Changing it to "VARBINARY(36) was saving the value with some weird characters"
+    //Changing it to "VARBINARY(36) was saving the value with some weird characters" -> Turns out i dont need the @Column annotation at all
     //@Type(type = "uuid-char") turned out to be deprecated, so i could't use it
     //@JdbcTypeCode(SqlTypes.VARCHAR) fixed the issue and values are now stored as UUIDs
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    //@Column(name = "id", columnDefinition = "VARCHAR(36)")
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID id;
 
@@ -31,10 +30,10 @@ public class NewsEntity {
     @Column(nullable = false)
     private StateEnum state;
 
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "text", columnDefinition = "TEXT", nullable = false)
     private String text;
 
     @Column(nullable = false)

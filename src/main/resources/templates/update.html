@@ -19,89 +19,86 @@
 
 <div class="container">
     <h2 class="text-center text-white">Update News</h2>
-    <form   th:action="@{/news/{id}/edit}"
-            th:method="POST"
-            th:object="${updateNewsModel}"
+    <form th:action="@{/news/edit/{id}(id=*{id})}" th:object="${updateNewsModel}" method="POST"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-        <input type="hidden" name="_method" value="put" />
-        <div class="row">
+<!--        <div class="row">-->
             <div class="form-group">
                 <label class="text-white font-weight-bold" for="title">Title</label>
-                <input id="title" type="textarea" class="form-control"
-                       placeholder="Put the news title here!" />
-                <p class="errors alert alert-danger">
+                <input id="title" name="title" type="textarea" class="form-control" th:field="*{title}" th:errorclass="is-invalid"
+                       placeholder="Put new news title here!" />
+                <p class="invalid-feedback errors alert alert-danger">
                     News Title is required
                 </p>
             </div>
-        </div>
-                <div class="row">
-                    <div class="form-group col-md-6 mb-3">
-                        <label class="text-center text-white font-weight-bold" for="state">State</label>
-                        <select id="state" class="form-control">
-                            <option value="">- Select the state of the news -</option>
-                            <option th:each="e : ${T(com.example.demo.model.enums.StateEnum).values()}"
-                                    th:text="${e}"
-                                    th:value="${e}"
-                                    th:selected="${e} == *{state}">
-                                State type
-                            </option>
-                        </select>
-                        <p class="errors alert alert-danger">
-                            State type is required.
-                        </p>
-                    </div>
-                </div>
-        <div class="form-group col-md-6 mb-3">
-            <label for="creationDate" class="text-white font-weight-bold">Creation Date</label>
-            <input
-                    id="creationDate"
-                    th:field="*{creationDate}"
-                    th:errorclass="is-invalid"
-                    type="date"
-                    step="1"
-                    class="form-control"
-                    placeholder="Creation date of the article"
-                    required
-            />
-            <p class="invalid-feedback errors alert alert-danger">
-                Creation date is required.
-            </p>
-        </div>
-                <div class="row">
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="validFrom" class="text-white font-weight-bold">Valid From</label>
-                        <input id="validFrom" type="date" class="form-control" th:field="*{validFrom}"
-                               th:datetime="${#temporals.format(validFrom, 'yyyy-MM-dd')}"
-                               placeholder="Valid From"/>
-                        <p class="errors alert alert-danger">
-                            Valid From of the article is needed.
-                        </p>
-                    </div>
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="validTo" class="text-white font-weight-bold">Valid To</label>
-                        <input id="validTo" type="date" th:field="*{validTo}"
-                               th:datetime="${#temporals.format(validTo, 'yyyy-MM-dd')}"
-                               class="form-control"
-                               placeholder="Valid To"/>
-                        <p class="errors alert alert-danger">
-                            Valid To date is required.
-                        </p>
-                    </div>
-                </div>
+<!--        </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="form-group col-md-6 mb-3">-->
+<!--                        <label class="text-center text-white font-weight-bold" for="state">State</label>-->
+<!--                        <select id="state" class="form-control">-->
+<!--                            <option value="">- Select the state of the news -</option>-->
+<!--                            <option th:each="e : ${T(com.example.demo.model.enums.StateEnum).values()}"-->
+<!--                                    th:text="${e}"-->
+<!--                                    th:value="${e}"-->
+<!--                                    th:selected="${e} == *{state}">-->
+<!--                                State type-->
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                        <p class="errors alert alert-danger">-->
+<!--                            State type is required.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--        <div class="form-group col-md-6 mb-3">-->
+<!--            <label for="creationDate" class="text-white font-weight-bold">Creation Date</label>-->
+<!--            <input-->
+<!--                    id="creationDate"-->
+<!--                    th:field="*{creationDate}"-->
+<!--                    th:errorclass="is-invalid"-->
+<!--                    type="date"-->
+<!--                    step="1"-->
+<!--                    class="form-control"-->
+<!--                    placeholder="Creation date of the article"-->
+<!--                    required-->
+<!--            />-->
+<!--            <p class="invalid-feedback errors alert alert-danger">-->
+<!--                Creation date is required.-->
+<!--            </p>-->
+<!--        </div>-->
+<!--                <div class="row">-->
+<!--                    <div class="form-group col-md-6 mb-3">-->
+<!--                        <label for="validFrom" class="text-white font-weight-bold">Valid From</label>-->
+<!--                        <input id="validFrom" type="date" class="form-control" th:field="*{validFrom}"-->
+<!--                               th:datetime="${#temporals.format(validFrom, 'yyyy-MM-dd')}"-->
+<!--                               placeholder="Valid From"/>-->
+<!--                        <p class="errors alert alert-danger">-->
+<!--                            Valid From of the article is needed.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                    <div class="form-group col-md-6 mb-3">-->
+<!--                        <label for="validTo" class="text-white font-weight-bold">Valid To</label>-->
+<!--                        <input id="validTo" type="date" th:field="*{validTo}"-->
+<!--                               th:datetime="${#temporals.format(validTo, 'yyyy-MM-dd')}"-->
+<!--                               class="form-control"-->
+<!--                               placeholder="Valid To"/>-->
+<!--                        <p class="errors alert alert-danger">-->
+<!--                            Valid To date is required.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
 
         <div class="form-group">
             <label class="text-white font-weight-bold" for="text">Text</label>
-            <textarea id="text" type="textarea" class="form-control" rows="3"
+            <textarea id="text" type="textarea" class="form-control" th:field="*{text}" rows="3" th:errorclass="is-invalid"
                       placeholder="Text"></textarea>
-            <p class="errors alert alert-danger">
+            <p class="invalid-feedback errors alert alert-danger">
                 Text for this article is required.
             </p>
         </div>
         <div class="form-group">
             <label class="text-white font-weight-bold" for="photoLink">Image URL</label>
-            <input id="photoLink" type="url" class="form-control"
+            <input id="photoLink" type="url" class="form-control" th:field="*{photoLink}" th:errorclass="is-invalid"
                    placeholder="Put article image URL here" />
-            <p class="errors alert alert-danger">
+            <p class="invalid-feedback errors alert alert-danger">
                 Article image URL is required.
             </p>
         </div>

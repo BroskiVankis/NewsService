@@ -30,7 +30,7 @@ public class TechUserDetailsServiceTest {
     // holding an instance of the "TechUserDetailsService" class that we test
     private TechUserDetailsService toTest;
 
-    //@BeforeEach ->excecuting method before each test method in test class
+    //@BeforeEach ->executing method before each test method in test class
     @BeforeEach
     void setUp() {
         // Creating new instance, passing the mockUserRepo object as dependency.
@@ -38,7 +38,7 @@ public class TechUserDetailsServiceTest {
     }
 
     //Testing loadUserByUsername when user exists
-    //Creatng a test user entity,stubbing the behaviour or mock repository
+    //Creating a test user entity,stubbing the behaviour or mock repository
     //asserting the expected result
     @Test
     void testLoadUserByUsername_UserExists() {

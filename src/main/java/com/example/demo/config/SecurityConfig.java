@@ -34,15 +34,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
+    public SecurityFilterChain filterChain(HttpSecurity http,
                                            OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
-        httpSecurity.
+        http.csrf().disable().
                 // defining which requests are allowed and which not
                         authorizeRequests().
                 // everyone can download static resources
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // everyone can login and register
-                requestMatchers("/", "/users/login", "/users/register").permitAll().
+                requestMatchers("/", "/users", "/users/login", "/users/register", "/users/usersAll", "/users/**").permitAll().
                 requestMatchers("/news/add").authenticated().
                 requestMatchers("/news/**").permitAll().
                 requestMatchers("/maintenance").permitAll().
@@ -77,7 +77,7 @@ public class SecurityConfig {
                 loginPage("/users/login").
                 successHandler(oAuthSuccessHandler);
 
-        return httpSecurity.build();
+        return http.build();
     }
 
     @Primary

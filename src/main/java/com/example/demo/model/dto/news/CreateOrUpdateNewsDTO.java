@@ -13,8 +13,6 @@ import java.util.UUID;
 
 public class CreateOrUpdateNewsDTO {
 
-
-
     private UUID id;
 
     @NotEmpty

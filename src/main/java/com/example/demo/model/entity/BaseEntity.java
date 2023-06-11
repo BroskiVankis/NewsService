@@ -10,6 +10,7 @@ import jakarta.persistence.MappedSuperclass;
 //import javax.persistence.Id;
 //import javax.persistence.MappedSuperclass;
 
+// This is a superclass, meaning other entities can inherit it's fields
 @MappedSuperclass
 public abstract class BaseEntity {
 

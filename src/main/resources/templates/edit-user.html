@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>News</title>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+  <script src="/js/jquery-3.5.1.slim.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+      <h1 class="text-center"> Update User </h1>
+      <div class="card-body">
+        <form th:action="@{/users/edit/{id}(id=*{id})}" th:object="${user}" method="POST">
+          <div class="form-group">
+            <label> User First Name </label>
+            <input type="text" name="fistName" th:field="*{firstName}" class="form-control"
+                   placeholder="Enter User First Name"/>
+          </div>
+          <div class="form-group">
+            <label> User Last Name </label>
+            <input type="text" name="lastName" th:field="*{lastName}" class="form-control"
+                   placeholder="Enter User Last Name"/>
+          </div>
+          <div class="form-group">
+            <label> User Email </label>
+            <input type="text" name="email" th:field="*{email}" class="form-control"
+                   placeholder="Enter User First Name"/>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

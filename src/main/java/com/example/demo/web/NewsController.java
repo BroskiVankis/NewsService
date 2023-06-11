@@ -2,6 +2,7 @@ package com.example.demo.web;
 
 import com.example.demo.model.dto.news.CreateOrUpdateNewsDTO;
 import com.example.demo.model.dto.news.SearchNewsDTO;
+import com.example.demo.model.dto.news.UpdateDTO;
 import com.example.demo.model.entity.NewsEntity;
 import com.example.demo.model.user.TechUserDetails;
 import com.example.demo.repository.NewsRepository;
@@ -20,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -36,7 +38,7 @@ public class NewsController {
 
     // Getting all the news and returning the news view
     @GetMapping("/news/all")
-    public String allNews(Model model, @PageableDefault(sort = "creationDate", direction = Sort.Direction.ASC, page = 0, size = 5) Pageable pageable) {
+    public String allNews(Model model, @PageableDefault(sort = "creationDate", direction = Sort.Direction.DESC, page = 0, size = 5) Pageable pageable) {
 
         model.addAttribute("news", newsService.getAllNews(pageable));
 
@@ -54,8 +56,11 @@ public class NewsController {
         return "news-add";
     }
 
-    // POST request
-    @PostMapping("/news/add")
+    // POST request for adding new News article
+    @PostMapping(value = "/news/add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
+            MediaType.APPLICATION_ATOM_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE
+    })
     public String addNews(@Valid CreateOrUpdateNewsDTO addNewsModel, // validating the form data submitted for adding news
                           BindingResult bindingResult, // Object holding the validation and binding errors
                           RedirectAttributes redirectAttributes, // storing flash attributes for redirecting
@@ -102,28 +107,8 @@ public class NewsController {
         return "news-search";
     }
 
-    // {id} representing the UUID of the news to be edited
-    // Model used for adding attributes for rendering the view
-    @GetMapping("/news/{id}/edit")
-    public String edit(@PathVariable("id") UUID uuid, Model model) {
-
-        //userService being used to get news details based ot the provided UUID
-        //If news found, adding it to the model and returning "details" view
-        // If News is not found throwing an exception
-        var article = newsService.getNewsEditDetails(uuid).
-                orElseThrow(() -> new ObjectNotFoundException("News with ID: " + uuid + " was not found!"));
-
-        if(!model.containsAttribute("updateNewsModel")) {
-            model.addAttribute("updateNewsModel", new CreateOrUpdateNewsDTO());
-        }
-
-        model.addAttribute("article", article);
-
-        return "update";
-    }
-
     //Deleting the News by provided UUID, where {id} is the Path
-    @PreAuthorize("isPublisher(#uuid)") // specifying an authorization condition -> "isPublisher(#uuid)" determines if authorized user is owner of the news item
+    @PreAuthorize("isPublisher(#uuid)") // specifying an authorization condition -> "isPublisher(#uuid)" determines if authorized user is publisher of the news item
     @DeleteMapping("/news/{id}")
     public String deleteNews(@PathVariable("id") UUID uuid) {
         newsService.deleteNewsById(uuid);
@@ -143,45 +128,26 @@ public class NewsController {
         return "details";
     }
 
-    //@PreAuthorize("isPublisher(#uuid)")
-//    @PutMapping("/news/{id}/edit")
-//    public String updateNews(@PathVariable("id") UUID id,
-//                             @RequestBody CreateOrUpdateNewsDTO updateNewsModel,
-//                             BindingResult bindingResult,
-//                             RedirectAttributes redirectAttributes,
-//                             @AuthenticationPrincipal TechUserDetails userDetails) {
-//
-//
-//        //Validating the form data submitted for updating the article
-//        if(bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("updateNewsModel", updateNewsModel);
-//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.updateNewsModel",bindingResult);
-//
-//            //Redirecting to the Edit view with validation errors
-//            return "redirect:/news/{id}/edit";
-//        }
-//
-//        newsService.updateNews(updateNewsModel, userDetails);
-//        // Redirecting to the details page of the updated article
-//        return "redirect:/news/all";
-//
-//    }
-
-    @PutMapping("/news/{id}/edit")
-    public NewsEntity updateNews(@RequestBody CreateOrUpdateNewsDTO newArticle, @PathVariable("id") UUID id) {
-
-        NewsEntity article = newsRepository.findById(id)
-                .orElse(new NewsEntity());
-
-        article.setTitle(newArticle.getTitle());
-        article.setCreationDate(newArticle.getCreationDate());
-        article.setValidFrom(newArticle.getValidFrom());
-        article.setValidTo(newArticle.getValidTo());
-        article.setText(newArticle.getText());
-        article.setPhotoLink(newArticle.getPhotoLink());
-
-        return newsRepository.save(article);
-
+    // Rendering the update view
+    @GetMapping("/news/edit/{id}")
+    public String editNews(@PathVariable("id") UUID id, Model model) {
+        model.addAttribute("updateNewsModel", newsService.getNewsById(id));
+        return "update";
     }
 
+    // Post request to change the values of an already existing article
+    @PostMapping("/news/edit/{id}")
+    public String updateNews(@PathVariable UUID id, @ModelAttribute("updateNewsModel") UpdateDTO updateNewsModel) {
+
+        NewsEntity existingNews = newsService.getNewsById(id);
+
+        existingNews.setTitle(updateNewsModel.getTitle());
+        existingNews.setText(updateNewsModel.getText());
+        existingNews.setPhotoLink(updateNewsModel.getPhotoLink());
+
+        newsService.updateArticle(existingNews);
+
+        return "redirect:/news/all";
+
+    }
 }

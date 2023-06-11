@@ -29,7 +29,7 @@ public class TestDataUtils {
         this.newsRepository = newsRepository;
     }
 
-    // initializing the user rolesm if they are not already present in the userRoleRepository
+    // initializing the user roles if they are not already present in the userRoleRepository
     // Checking the count of existing roles and creates user roles if count is 0
     private void initRoles() {
         if(userRoleRepository.count() == 0) {
@@ -105,6 +105,10 @@ public class TestDataUtils {
         return newsRepository.save(newsEntity);
     }
 
+    //Ensuring a clean state of DB before running the tests
+    //clearing all entities stored in DB tables related to news, users and user roles
+
+    //Doing so helps isolate the tests from previous state and makes sure the cases are independent and predictable
     public void cleanDatabase() {
         newsRepository.deleteAll();;
         userRepository.deleteAll();
