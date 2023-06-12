@@ -1,6 +1,6 @@
 ﻿# NewsService
 
-° For the building of this application JAva, Spring and Mockito were used.
+° For the building of this application Java, Spring, Thymeleaf for the frontend and Mockito for the tests were used.
 
 ° This is the Home Page: 
 ![image](https://github.com/BroskiVankis/NewsService/assets/78420177/a65e19c5-f060-4813-9d35-81f39cd1b162)
